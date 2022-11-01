@@ -7,6 +7,7 @@ That being said it is kinda executing third party scripts which is like really s
 
 **zyBooks Bookmark**
 ```js
+javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/zybooks.js").then(a=>a.text()).then(eval)
 ```
 
 **Perusall Bookmark**
