@@ -163,4 +163,4 @@ async function do_page() {
 
 	}}
 
-}))
+})()
