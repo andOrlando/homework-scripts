@@ -11,7 +11,7 @@ That being said it is kinda executing third party scripts which is like really s
 
 **Perusall Bookmark**
 ```js
-javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/perusall.js").then(a=>a.text()).then(a=>eval(a))
+javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/perusall.js").then(a=>a.text()).then(eval)
 ```
 
 - [X] zyBooks (solves everything but the draggy bits and the challenge questions)
