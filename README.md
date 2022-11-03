@@ -5,6 +5,11 @@ Sooo now that I have to pay a bunch of money for homework portals I figured it'd
 
 That being said it is kinda executing third party scripts which is like really shady so don't use this if you're worried about that. You could also read the source files (except for perusall becuase for some reason I felt like golfing that one and now its unintelligable)
 
+**MyMathLab Bookmark**
+```js
+javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/mymathlab.js").then(a=>a.text()).then(eval)
+```
+
 **zyBooks Bookmark**
 ```js
 javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/zybooks.js").then(a=>a.text()).then(eval)
@@ -15,6 +20,13 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
 javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/perusall.js").then(a=>a.text()).then(eval)
 ```
 
-- [X] zyBooks (solves everything but the draggy bits and the challenge questions)
-- [X] Perusall (only scrolls through page to generate some base points)
-- [ ] MyMathLab
+- [X] zyBooks
+  - solves all non-challenge and non-draggy bits
+  - if you let it keep going it can do literally all your homework
+- [X] Perusall
+  - only scrolls through to generate you some base points
+- [X] MyMathLab
+  - adds a console
+  - console literally just evaluates javascript strings but also adds a matrix object
+  - said object can calc a bunch of stuff about matrices
+  - can also rip matrices from the screen, hence why it's actually useful for mymathlab in the first place
