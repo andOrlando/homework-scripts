@@ -30,3 +30,35 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
   - console literally just evaluates javascript strings but also adds a matrix object
   - said object can calc a bunch of stuff about matrices
   - can also rip matrices from the screen, hence why it's actually useful for mymathlab in the first place
+  - object methods (all return new objects, no need to worry about mutability):
+    - `getMatrix()`: 2D array representing the values of the matrix
+    - `getRow(n)`: nth row as array
+    - `getCol(n)`: nth column as array
+    - `add(other)`: sum of matrix and the other matrix
+    - `multiply(other)`: product of this matrix and the other matrix
+    - `scalarMultiply(scalar)`: product of the scalar and this matrix
+    - `concatenateRows(other)`: adds columns of other onto the right of this matrix
+    - `copyToClipboard()`: TODO
+    - `getRref()`: matrix that's the rref of this matrix
+    - `getSolutions()`: assumes last col is b, solves Ax=b, returning [x_h, x_p] where x_p is a matrix and x_h a list of matrices
+    - `getKernel()`: returns array of matrices which span kernel
+    - `getDeterminant()`: calcs determinant
+    - `getInverse()`: TODO
+    - `getTranspose()`: returns transpose
+    - `toString()`: turns to string
+  - object properties (these are read-only or you might mess something up) (if you can't tell, for most of the properties I just cache the function calls because matrices are supposed to be immutable):
+    - `m`: rows
+    - `n`: cols
+    - `entries`: entries as a list
+    - `matrix`: entries as a 2D array
+    - `rref`: rref matrix
+    - `solution`: solution
+    - `kernel`: kernel
+    - `image`: image
+    - `determinant`: determinant
+    - `inverse`: inverse
+    - `transpose`: transpose
+  - non-javascript-commands:
+    - `toggle`: hide all but the console window or show it
+    - `compile`: rip matrices from screen and put them into global variables
+    - `clear`: clears screen
