@@ -36,8 +36,6 @@ class Matrix {
 	}
 
 	get matrix() { if (!("matrix" in this._private)) this._private["matrix"] = this.getMatrix(); return this._private["matrix"] }
-	get row() { if (!("row" in this._private)) this._private["row"] = this.getRow(); return this._private["row"] }
-	get col() { if (!("col" in this._private)) this._private["col"] = this.getCol(); return this._private["col"] }
 	getMatrix() { return [...Array(this.m)].map((_,i)=>[...Array(this.n)].map((_,j)=>this.entries[i*this.n+j])) }
 	getRow(n) { return [...Array(this.n)].map((_,i)=>this.entries[n*this.n+i])}
 	getCol(n) { return [...Array(this.m)].map((_,i)=>this.entries[i*this.n+n]) }
