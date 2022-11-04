@@ -1,1 +1,1 @@
-(()=>{d=(e=document.querySelector("input")).max/1-(m=e.min/1)+1;i=0;(async()=>{while(1){await new Promise(r=>setTimeout(r,4000));e.value=++i%d+m;e.dispatchEvent(new KeyboardEvent("keydown",{keyCode:13,bubbles:1}))}})()})()
+d=(e=document.querySelector("input")).max/1-(m=e.min/1)+1;i=0;(async()=>{while(1){await new Promise(r=>setTimeout(r,4000));e.value=++i%d+m;e.dispatchEvent(new KeyboardEvent("keydown",{keyCode:13,bubbles:1}))}})()
