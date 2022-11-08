@@ -19,7 +19,7 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
 
 **zyBooks Bookmark but it finishes everything**
 ```js
-javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/zybooks.js").then(a=>a.text()).then(a=>eval(`finisheverything=yes;${a}`))
+javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/zybooks.js").then(a=>a.text()).then(a=>eval(`finisheverything="yes";${a}`))
 ```
 
 **Perusall Bookmark**

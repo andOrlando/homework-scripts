@@ -190,7 +190,7 @@ async function do_page() {
 	console.log("doing stuff")
 
 	//finisheveryting should be inputted through the bookmark
-	if (typeof finisheverything != "undefined" && finisheverything == "yes") do_page()
+	if (typeof finisheverything == "undefined" || finisheverything != "yes") do_page()
 
 	//otherwise we just go forever
 	else { while (true) {
