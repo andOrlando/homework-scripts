@@ -1,5 +1,3 @@
-const fully_auto = prompt("say \"yes\" to do all your zybooks") == "yes"
-
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const is_incorrect = question => { const a = question.querySelector(".zb-explanation.has-explanation"); return a == null || a.classList.contains("incorrect") }
@@ -34,7 +32,6 @@ function solve_multiple_choices() { return new Promise(async resolve => {
 
 })}
 
-
 function solve_short_answer(question) { return new Promise(async resolve => {
 
 	//get show answer button
@@ -49,8 +46,8 @@ function solve_short_answer(question) { return new Promise(async resolve => {
 
 	//get answer and entrybox
 	const answer = question.querySelector("span.forfeit-answer").innerHTML
-        .replace("&gt;", ">")
-        .replace("&lt;", "<")
+		.replace("&gt;", ">")
+		.replace("&lt;", "<")
 	const entrybox = question.querySelector(".ember-text-area.ember-view.zb-text-area.hide-scrollbar")
 
 	entrybox.value = answer
@@ -66,8 +63,7 @@ function solve_short_answer(question) { return new Promise(async resolve => {
 	resolve()
 })}
 
-function solve_short_answers() { return new Promise(async resolve => {
-	//find short answer things
+function solve_short_answers() { return new Promise(async resolve => { //find short answer things
 	const short_answer = document.querySelectorAll(".question-set-question.short-answer-question.ember-view")
 
 	//promise list
@@ -80,6 +76,64 @@ function solve_short_answers() { return new Promise(async resolve => {
 	console.log("finished short answers")
 	resolve()
 
+})}
+
+function solve_draggy_bit(elem) { return new Promise(async resolve => {
+	const draggy_bits = elem.querySelectorAll(".draggable-object");
+	const buckets = [...elem.querySelectorAll(".term-bucket")]
+	//the length of these are all going to be the same I assume
+
+	for (var i=0; i<draggy_bits.length; i++) {
+		
+		const elem = draggy_bits[i]
+		var data_transfer 
+
+		await new Promise(resolve => {
+			elem.addEventListener("dragstart", async e => {
+				//it doesn't add it instantly for some reason (this listener has higher prio?)
+				await wait(100)
+				data_transfer = e.dataTransfer
+				resolve()
+			})
+			elem.dispatchEvent(new DragEvent("dragstart", {
+				dataTransfer: new DataTransfer(),
+				bubbles: true
+			}))
+		})
+
+		for (const bucket of buckets) {
+			
+			//drop it in the bucket
+			bucket.dispatchEvent(new DragEvent("drop", {
+				dataTransfer: data_transfer,
+				bubbles: true
+			}))
+
+			//wait a bit
+			await wait(500)
+
+			//if it's correct, remove bucket from buckets and break
+			if (bucket.parentElement.nextElementSibling.classList.contains("correct")) {
+				buckets.splice(buckets.indexOf(bucket),1)
+				break
+			}
+		}
+
+	}
+
+	resolve()
+})}
+
+function solve_draggy_bits() { return new Promise(async resolve => {
+	const elems = document.querySelectorAll(".definition-match-payload");
+
+	const promises = [];
+
+	for (const elem of elems) promises.push(solve_draggy_bit(elem))
+
+	await Promise.allSettled(promises)
+	console.log("finished draggy bits")
+	resolve()
 })}
 
 var already_clicked = []
@@ -123,7 +177,8 @@ async function do_page() {
 	await Promise.allSettled([
 		run_videos(),
 		solve_short_answers(),
-		solve_multiple_choices()
+		solve_multiple_choices(),
+		solve_draggy_bits()
 	])
 
 	console.log("finished everything")
@@ -134,8 +189,8 @@ async function do_page() {
 
 	console.log("doing stuff")
 
-	//if not fully auto just do one page
-	if (!fully_auto) do_page()
+	//finisheveryting should be inputted through the bookmark
+	if (typeof finisheverything != "undefined" && finisheverything == "yes") do_page()
 
 	//otherwise we just go forever
 	else { while (true) {

@@ -3,7 +3,9 @@ I don't wanna do homework please
 
 Sooo now that I have to pay a bunch of money for homework portals I figured it'd be a good idea to get the least value for my money imaginable by skipping as much of the homework as I physically can. Ideally this repository is just gonna contain a bunch of bookmarks that you can copy and paste into your bookmarks and then do all your homework for you
 
-That being said, **do not use this** unless you really really trust me. I can't stress enough how bad of an idea it is to execute someone else's javascript. I could theoretically change these scripts to be some kinda keylogger at any point and then I would kinda just have your passwords. Unless you know me in real life and could (hypothetically) come up to me in person and (hypothetically) smack me, you really shouldn't use this at all. Now I'm not going to do that, so if you really trust me that's fine, but you could also just self-host it or put it into a greasemonekey script or really anything that doesn't execute remote javascript.
+That being said, **do not use this** unless you really really trust me. I can't stress enough how bad of an idea it is to execute someone else's javascript. I could theoretically change these scripts to be some kinda keylogger at any point and then I would kinda just have your passwords. Unless you know me in real life and could (hypothetically) come up to me in person and (hypothetically) kick me in the shins, you really shouldn't use this at all. Now I'm not going to do that, so if you really trust me that's fine, but you could also just self-host it or put it into a greasemonekey script or really anything that doesn't execute remote javascript.
+
+Also this is all totally theoretical, just as one would make a really shady crypto miner and open source it just for testing purposes. I definitely haven't used this myself because I'm too academically dignified. You also should not use this yourself because you're also academically dignified.
 
 **MyMathLab Bookmark**
 ```js
@@ -15,14 +17,20 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
 javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/zybooks.js").then(a=>a.text()).then(eval)
 ```
 
+**zyBooks Bookmark but it finishes everything**
+```js
+javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/zybooks.js").then(a=>a.text()).then(a=>eval(`finisheverything=yes;${a}`))
+```
+
 **Perusall Bookmark**
 ```js
 javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/perusall.js").then(a=>a.text()).then(eval)
 ```
 
 - [X] zyBooks
-  - solves all non-challenge and non-draggy bits
+  - solves everything but the challenge sections
   - if you let it keep going it can do literally all your homework
+  - you don't even have to press buttons, just let it do its thing and when you come back you'll have a finished zybooks
 - [X] Perusall
   - only scrolls through to generate you some base points
 - [X] MyMathLab
