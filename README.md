@@ -36,8 +36,10 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
  - solves everything but the challenge sections
  - if you let it keep going it can do literally all your homework
  - you don't even have to press buttons, just let it do its thing and when you come back you'll have a finished zybooks
+ 
 **Perusall**
  - only scrolls through to generate you some base points
+ 
 **MyMathLab**
  - adds a console
  - console literally just evaluates javascript strings but also adds a matrix object
@@ -75,6 +77,7 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
    - `toggle`: hide all but the console window or show it
    - `compile`: rip matrices from screen and put them into global variables **this one's actually important** this is like the only command that matters
    - `clear`: clears screen
+   
 **webassign**
  - Adds buttons to all equations that let you copy the latex of the equation. This can *theoretically* be pasted into wolfram alpha but none of us would do that because we're academically honest
  - This was made as part of Hack UMass 2022 with Marshall, Elijah, Aditi and Cynthia but was folded into this since we're not really continuing that project
