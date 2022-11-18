@@ -27,46 +27,59 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
 javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/perusall.js").then(a=>a.text()).then(eval)
 ```
 
-- [X] zyBooks
-  - solves everything but the challenge sections
-  - if you let it keep going it can do literally all your homework
-  - you don't even have to press buttons, just let it do its thing and when you come back you'll have a finished zybooks
-- [X] Perusall
-  - only scrolls through to generate you some base points
-- [X] MyMathLab
-  - adds a console
-  - console literally just evaluates javascript strings but also adds a matrix object
-  - said object can calc a bunch of stuff about matrices
-  - can also rip matrices from the screen, hence why it's actually useful for mymathlab in the first place
-  - object methods (all return new objects, no need to worry about mutability):
-    - `getMatrix()`: 2D array representing the values of the matrix
-    - `getRow(n)`: nth row as array
-    - `getCol(n)`: nth column as array
-    - `add(other)`: sum of matrix and the other matrix
-    - `multiply(other)`: product of this matrix and the other matrix
-    - `scalarMultiply(scalar)`: product of the scalar and this matrix
-    - `concatenateRows(other)`: adds columns of other onto the right of this matrix
-    - `copyToClipboard()`: TODO
-    - `getRref()`: matrix that's the rref of this matrix
-    - `getSolutions()`: assumes last col is b, solves Ax=b, returning [x_h, x_p] where x_p is a matrix and x_h a list of matrices
-    - `getKernel()`: returns array of matrices which span kernel
-    - `getDeterminant()`: calcs determinant
-    - `getInverse()`: TODO
-    - `getTranspose()`: returns transpose
-    - `toString()`: turns to string
-  - object properties (these are read-only or you might mess something up) (if you can't tell, for most of the properties I just cache the function calls because matrices are supposed to be immutable):
-    - `m`: rows
-    - `n`: cols
-    - `entries`: entries as a list
-    - `matrix`: entries as a 2D array
-    - `rref`: rref matrix
-    - `solution`: solution
-    - `kernel`: kernel
-    - `image`: image
-    - `determinant`: determinant
-    - `inverse`: inverse
-    - `transpose`: transpose
-  - non-javascript-commands:
-    - `toggle`: hide all but the console window or show it
-    - `compile`: rip matrices from screen and put them into global variables
-    - `clear`: clears screen
+**Webassign Bookmark**
+```js
+javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/webassign.js").then(a=>a.text()).then(eval)
+```
+
+**zyBooks**
+ - solves everything but the challenge sections
+ - if you let it keep going it can do literally all your homework
+ - you don't even have to press buttons, just let it do its thing and when you come back you'll have a finished zybooks
+**Perusall**
+ - only scrolls through to generate you some base points
+**MyMathLab**
+ - adds a console
+ - console literally just evaluates javascript strings but also adds a matrix object
+ - said object can calc a bunch of stuff about matrices
+ - can also rip matrices from the screen, hence why it's actually useful for mymathlab in the first place
+ - object methods (all return new objects, no need to worry about mutability):
+   - `getMatrix()`: 2D array representing the values of the matrix
+   - `getRow(n)`: nth row as array
+   - `getCol(n)`: nth column as array
+   - `add(other)`: sum of matrix and the other matrix
+   - `multiply(other)`: product of this matrix and the other matrix
+   - `scalarMultiply(scalar)`: product of the scalar and this matrix
+   - `concatenateRows(other)`: adds columns of other onto the right of this matrix
+   - `copyToClipboard()`: TODO
+   - `getRref()`: matrix that's the rref of this matrix
+   - `getSolutions()`: assumes last col is b, solves Ax=b, returning [x_h, x_p] where x_p is a matrix and x_h a list of matrices
+   - `getKernel()`: returns array of matrices which span kernel
+   - `getDeterminant()`: calcs determinant
+   - `getInverse()`: TODO
+   - `getTranspose()`: returns transpose
+   - `toString()`: turns to string
+ - object properties (these are read-only or you might mess something up) (if you can't tell, for most of the properties I just cache the function calls because matrices are supposed to be immutable):
+   - `m`: rows
+   - `n`: cols
+   - `entries`: entries as a list
+   - `matrix`: entries as a 2D array
+   - `rref`: rref matrix
+   - `solution`: solution
+   - `kernel`: kernel
+   - `image`: image
+   - `determinant`: determinant
+   - `inverse`: inverse
+   - `transpose`: transpose
+ - non-javascript-commands:
+   - `toggle`: hide all but the console window or show it
+   - `compile`: rip matrices from screen and put them into global variables **this one's actually important** this is like the only command that matters
+   - `clear`: clears screen
+**webassign**
+ - Adds buttons to all equations that let you copy the latex of the equation. This can *theoretically* be pasted into wolfram alpha but none of us would do that because we're academically honest
+ - This was made as part of Hack UMass 2022 with Marshall, Elijah, Aditi and Cynthia but was folded into this since we're not really continuing that project
+
+**TODO:**
+ - [ ] make double/triple integrals wihtout expressions work correctly (webassign sees them as a single integral)
+ - [ ] make sin/cos work correctly by parsing parenthesis but that'd be a lot of work so idk
+ - [ ] make alternate perusall script that clicks on and off the assignment to generate more points

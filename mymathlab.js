@@ -199,8 +199,8 @@ input.addEventListener("keyup", event => {
 	//special commands
 	//toggle shrinks/unshrinks it
 	if (input.value == "toggle") container.style.height = container.style.height == "30px" ? "200px" : "30px"
-	//recompile redefines all matricies as new ones on this screen
-	else if (input.value == "recompile") compileMatrices()
+	//compile redefines all matricies as new ones on this screen
+	else if (input.value == "compile") compileMatrices()
 	else if (input.value == "clear") log.innerHTML = ""
 
 	else {
