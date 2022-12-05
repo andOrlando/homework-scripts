@@ -1,1 +1,11 @@
-d=(e=document.querySelector("input")).max/1-(m=e.min/1)+1;i=0;(async()=>{while(1){await new Promise(r=>setTimeout(r,4000));e.value=++i%d+m;e.dispatchEvent(new KeyboardEvent("keydown",{keyCode:13,bubbles:1}))}})()
+//d=(e=document.querySelector("input")).max/1-(m=e.min/1)+1;i=0;(async()=>{while(1){await new Promise(r=>setTimeout(r,4000));e.value=++i%d+m;e.dispatchEvent(new KeyboardEvent("keydown",{keyCode:13,bubbles:1}))}})()
+const wait=async m=>new Promise(r=>setTimeout(r,m))
+(async () => { while (true) {
+	document.querySelector(".open-assignment").click()
+	await wait(10000)
+	document.querySelector("#home-link").click()
+	await wait(1000)
+	const update = document.querySelector("#force-score-update")
+	if (update) update.click()
+	await wait(3000)
+}})()
