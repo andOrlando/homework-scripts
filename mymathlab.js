@@ -45,17 +45,17 @@ class Matrix {
 		return new Matrix(this.m, this.n, this.entries.map((n,i)=>n+other.entries[i]))
 	}
 	multiply(other) {
-		if (this.m != other.n) throw "n rows of first matrix must equal n cols of second matrix"
+		if (this.n != other.m) throw "n rows of first matrix must equal n cols of second matrix"
 		const entries = []
-		for (var i=0; i<this.m; i++) {
-			for (var j=0; j<this.m; j++) {
+		for (var i=0; i<this.n; i++) {
+			for (var j=0; j<other.m; j++) {
 				//ith row of first matrix dog jth column of second matrix
 				const row = this.getRow(i)
 				const col = other.getCol(j)
 				entries.push((row.map((n,i)=>n*col[i])).reduce((a,b)=>a+b))
 			}
 		}
-		return new Matrix(this.m, this.m, entries)
+		return new Matrix(this.n, other.m, entries)
 	}
 	scalarMultiply(scalar) { return new Matrix(this.m, this.n, this.entries.map(a=>scalar*a)) }
 	concatenateRows(other) {
@@ -114,7 +114,6 @@ class Matrix {
 		//create and return the new matrix
 		return new Matrix(this.m, this.n, matrix.reduce((a,b)=>a.concat(b)))
 	}
-	//check
 	get solution() { if (!("solution" in this._private)) this._private["solution"] = this.getSolution(); return this._private["solution"] }
 	getSolution() {
 		//solves matrix by rrefing it and converting that into x_p and x_h

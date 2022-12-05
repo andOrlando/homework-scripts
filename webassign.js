@@ -214,12 +214,6 @@ function parse(input) {
 	return base
 }
 
-function getquestions() {
-	return [...document.querySelectorAll("div.watexline")]
-}
-
-const latexList = getquestions().map(parse);
-
 for (const [question, latex] of [...document.querySelectorAll("div.watexline")].map(e => [e, parse(e)])) {
 	const div = document.createElement("div")
 	div.style.display = "grid"
