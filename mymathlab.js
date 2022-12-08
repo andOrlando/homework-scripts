@@ -55,7 +55,7 @@ class Matrix {
 				entries.push((row.map((n,i)=>n*col[i])).reduce((a,b)=>a+b))
 			}
 		}
-		return new Matrix(this.n, other.m, entries)
+		return new Matrix(this.m, other.n, entries)
 	}
 	scalarMultiply(scalar) { return new Matrix(this.m, this.n, this.entries.map(a=>scalar*a)) }
 	concatenateRows(other) {
@@ -65,7 +65,12 @@ class Matrix {
 		return new Matrix(this.m, this.n + other.n, entries)
 	}
 
-	copyToClipboard() {/*TODO*/}
+	copyToClipboard() {
+		const matrix = this.getMatrix()
+		const string = `@MATX{${matrix.map(a=>`{${a.join(";")}}`).join(";")}}`
+		out(string) //print it out if I can't paste it
+		window.prompt("Copy the string", string)
+	}
 
 	get rref() { if (!("rref" in this._private)) this._private["rref"] = this.getRref(); return this._private["rref"] }
 	getRref() {
@@ -172,15 +177,40 @@ class Matrix {
 		}
 		return sum
 	}
-	//check
+
+	get minors() { if (!("minors" in this._private)) this._private["minors"] = this.getMinors(); return this._private["minors"] }
+	getMinors() {
+		if (this.m !== this.n) throw "matrix must be square"
+		const entries = []
+		for (var [x,i,j]=[0,0,0]; x<this.m**2; (()=>{x++;i=x%this.m;j=x/this.m|0})()) {
+			//construct a matrix out of the remaining rows and columns
+			const sub = []
+			var k = 0;
+			while (k < this.m ** 2) {
+				if (k == this.m * i) {k += this.m; continue; }
+				if (k % this.m == j) {k += 1; continue }
+				sub.push(this.entries[k])
+				k++;
+			}
+			if (i == j) console.log(sub)
+			entries.push(new Matrix(this.m-1, this.m-1, sub).determinant)
+		}
+		return new Matrix(this.m, this.m, entries)
+	}
+
+	get cofactors() { if (!("cofactors" in this._private)) this._private["cofactors"] = this.getCofactors(); return this._private["cofactors"] }
+	getCofactors() { return new Matrix(this.m, this.n, this.minors.entries.map((a, i) => a * (-1) ** i)) }
+
+	get adjugate() { if (!("adjugate" in this._private)) this._private["adjugate"] = this.getAdjugate(); return this._private["adjugate"] }
+	getAdjugate() { return this.cofactors.getTranspose() }
+
 	get inverse() { if (!("inverse" in this._private)) this._private["inverse"] = this.getInverse(); return this._private["inverse"] }
 	getInverse() {
-		return
+		return new Matrix(this.m, this.n, this.adjugate.entries.map(a => a / this.determinant))
 	}
+
 	get transpose() { if (!("transpose" in this._private)) this._private["transpose"] = this.getTranspose(); return this._private["transpose"] }
-	getTranspose() {
-	   return new Matrix(this.n, this.m, [...Array(this.n)].reduce((s,_,i)=>s.concat(this.getCol(i)),[]))
-	}
+	getTranspose() { return new Matrix(this.n, this.m, [...Array(this.n)].reduce((s,_,i)=>s.concat(this.getCol(i)),[])) }
 
 	toString() { return [...Array(this.m)].reduce((s,_,i)=>s+[...Array(this.n)].reduce((s,_,j)=>s+this.entries[i*this.n+j]+"\t","")+(i!=this.m-1?"\n":""),"") }
 }
@@ -252,6 +282,7 @@ function compileMatrices() {
 	const all = []
 	for (const elem of elems) {
 		const string = elem.ariaLabel
+		if (!string) continue
 
 		const entries = [...string.matchAll(valsrxp)].map(a=>a[0].replace("negative ","-")/1)
 		const [m,n] = [...string.match(dimsrxp)].slice(1).map(a=>a/1) //dimensions
