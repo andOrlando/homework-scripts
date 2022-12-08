@@ -206,7 +206,7 @@ class Matrix {
 
 	get inverse() { if (!("inverse" in this._private)) this._private["inverse"] = this.getInverse(); return this._private["inverse"] }
 	getInverse() {
-		if (this.m == this.n && this.m == 2) return new Matrix(2,2,[this.entries[0], -this.entries[2], -this.entries[1], this.entries[3]].map(a => a / this.determinant)
+		if (this.m == this.n && this.m == 2) return new Matrix(2,2,[this.entries[0], -this.entries[2], -this.entries[1], this.entries[3]].map(a => a / this.determinant))
 		return new Matrix(this.m, this.n, this.adjugate.entries.map(a => a / this.determinant))
 	}
 
