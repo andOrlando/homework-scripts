@@ -69,6 +69,8 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
    - `adjugate`: adjugate
    - `inverse`: inverse
    - `transpose`: transpose
+ - static methods:
+    - `identity(n)` create identity matrix in R^nxn
  - non-javascript-commands:
    - `toggle`: hide all but the console window or show it
    - `compile`: rip matrices from screen and put them into global variables **this one's actually important** this is like the only command that matters

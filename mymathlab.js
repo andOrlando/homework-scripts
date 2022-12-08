@@ -35,6 +35,10 @@ class Matrix {
 		this._private = {}
 	}
 
+	static identity(n) {
+		return new Matrix(n,n,[...Array(n**2)].map((_,i)=>i%n==(i/n|0)?1:0))
+	}
+
 	get matrix() { if (!("matrix" in this._private)) this._private["matrix"] = this.getMatrix(); return this._private["matrix"] }
 	getMatrix() { return [...Array(this.m)].map((_,i)=>[...Array(this.n)].map((_,j)=>this.entries[i*this.n+j])) }
 	getRow(n) { return [...Array(this.n)].map((_,i)=>this.entries[n*this.n+i])}
