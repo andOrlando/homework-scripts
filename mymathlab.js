@@ -243,7 +243,7 @@ input.addEventListener("keyup", event => {
 	event.preventDefault()
 })
 
-const valsrxp = /(?<=(?:(?:Matrix|Table).* )\d\w*? Row \d\w*? Column )(?:negative )?\d+(?=.*End(?:Matrix|Table))/g;
+const valsrxp = /(?<=(?:(?:Matrix|Table).* )(?<=\d\w*? Row |\d\w*? Column ))(?:negative )?\d+(?= .*End(?:Matrix|Table))/g;
 const dimsrxp = /(\d+) By (\d+) (?:Matrix|Table)/;
 const assignrxp = /(?:Upper)?(?:Bold)? ([a-zA-Z])(?: (\d+))?/
 
