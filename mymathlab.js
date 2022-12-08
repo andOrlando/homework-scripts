@@ -282,8 +282,7 @@ function compileMatrices() {
 	var randommatrixindex = 0
 	const all = []
 	for (const elem of elems) {
-		//idk why it just doesn't wanna work sometimes
-		const string = elem.attributes['aria-label'] || elem.ariaLabel
+		const string = elem.ariaLabel || elem.attributes['aria-label'].value
 		if (!string) continue
 
 		const entries = [...string.matchAll(valsrxp)].map(a=>a[0].replace("negative ","-")/1)
