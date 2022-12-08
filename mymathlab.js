@@ -58,8 +58,8 @@ class Matrix {
 		return new Matrix(this.m, other.n, entries)
 	}
 	pow(n) {
-		if (pow == 1) return this
-		return this.multiply(pow(n-1))
+		if (n == 1) return this
+		return this.multiply(this.pow(n-1))
 	}
 	scalarMultiply(scalar) { return new Matrix(this.m, this.n, this.entries.map(a=>scalar*a)) }
 	concatenateRows(other) {
