@@ -45,6 +45,9 @@ class Matrix {
 		return new Matrix(this.m, this.n, this.entries.map((n,i)=>n+other.entries[i]))
 	}
 	multiply(other) {
+		//scalar multipl
+		if (typeof other === "number") return new Matrix(this.m, this.n, this.entries.map(a=>other*a))
+
 		if (this.n != other.m) throw "n rows of first matrix must equal n cols of second matrix"
 		const entries = []
 		for (var i=0; i<this.n; i++) {
@@ -61,15 +64,14 @@ class Matrix {
 		if (n == 1) return this
 		return this.multiply(this.pow(n-1))
 	}
-	scalarMultiply(scalar) { return new Matrix(this.m, this.n, this.entries.map(a=>scalar*a)) }
-	concatenateRows(other) {
+	append(other) {
 		if (this.m != other.m) throw "rows must be equal"
 		var entries = []
 		for (var i=0; i<this.m; i++) entries = entries.concat(this.getRow(i).concat(other.getRow(i)))
 		return new Matrix(this.m, this.n + other.n, entries)
 	}
 
-	copyToClipboard() {
+	copy() {
 		const matrix = this.getMatrix()
 		const string = `@MATX{${matrix.map(a=>`{${a.join(";")}}`).join(";")}}`
 		out(string) //print it out if I can't paste it
@@ -155,7 +157,7 @@ class Matrix {
 	}
 	get kernel() { if (!("kernel" in this._private)) this._private["kernel"] = this.getKernel(); return this._private["kernel"] }
 	getKernel() {
-		return this.concatenateRows(new Matrix(this.m, 1, [...Array(this.m)].map(()=>0))).solution[1]
+		return this.append(new Matrix(this.m, 1, [...Array(this.m)].map(()=>0))).solution[1]
 
 	}
 	get image() { if (!("image" in this._private)) this._private["image"] = this.getImage(); return this._private["image"] }

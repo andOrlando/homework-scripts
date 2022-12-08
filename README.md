@@ -50,18 +50,11 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
    - `getRow(n)`: nth row as array
    - `getCol(n)`: nth column as array
    - `add(other)`: sum of matrix and the other matrix
-   - `multiply(other)`: product of this matrix and the other matrix
-   - `scalarMultiply(scalar)`: product of the scalar and this matrix
-   - `concatenateRows(other)`: adds columns of other onto the right of this matrix
-   - `copyToClipboard()`: TODO
-   - `getRref()`: matrix that's the rref of this matrix
-   - `getSolutions()`: assumes last col is b, solves Ax=b, returning [x_h, x_p] where x_p is a matrix and x_h a list of matrices
-   - `getKernel()`: returns array of matrices which span kernel
-   - `getDeterminant()`: calcs determinant
-   - `getInverse()`: TODO
-   - `getTranspose()`: returns transpose
+   - `multiply(other)`: product of this matrix and the other matrix or scalar
+   - `append(other)`: adds columns of other onto the right of this matrix
+   - `copy()`: TODO
    - `toString()`: turns to string
- - object properties (these are read-only or you might mess something up) (if you can't tell, for most of the properties I just cache the function calls because matrices are supposed to be immutable):
+ - object properties--these are read-only or it might break stuff. If you want a mutable copy, use getter syntax like `getMatrix` or `getInverse` for anything other than entries.
    - `m`: rows
    - `n`: cols
    - `entries`: entries as a list
@@ -71,6 +64,9 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
    - `kernel`: kernel
    - `image`: image
    - `determinant`: determinant
+   - `minors`: matrix of minors
+   - `cofactors`: matrix of cofactors
+   - `adjugate`: adjugate
    - `inverse`: inverse
    - `transpose`: transpose
  - non-javascript-commands:
