@@ -82,7 +82,6 @@ class Matrix {
 		out(string) //print it out if I can't paste it
 		window.prompt("Copy the string", string)
 	}
-
 	copylatex() {
 		const matrix = this.getMatrix()
 		const string = `{${matrix.map(a=>`{${a.join(",")}}`).join(",")}}`
@@ -90,10 +89,12 @@ class Matrix {
 		window.prompt("Copy the string", string)
 	}
 
-	get rref() { if (!("rref" in this._private)) this._private["rref"] = this.getRref(); return this._private["rref"] }
-	getRref() {
+
+	get rr() { if (!("rr" in this._private)) this._private["rr"] = this.getRr(); return this._private["rr"] }
+	getRr() {
 		//get matrix
-		const matrix = this.getMatrix()
+		var matrix = this.getMatrix()
+		console.log(matrix.map(a=>a.join(" ")).join("\n"))
 
 		//keep track of pivots
 		var npivots = 0;
@@ -124,19 +125,31 @@ class Matrix {
 				const tozero = matrix[rown][coln]
 
 				//get matrix[row][col] to zero by subtracting row we're operating on
-				matrix[rown] = matrix[rown].map((a,i)=>Math.round((a-matrix[npivots][i]/val*tozero)/10)*10)
+				matrix[rown] = matrix[rown].map((a,i)=>a*val-matrix[npivots][i]*tozero)
 			}
-
-			//divide row by its pivot
-			matrix[npivots] = matrix[npivots].map(a=>a/val)
 
 			//increment number of pivots
 			npivots++;
 		}
 
+		//factor each row
+		const gcf=(a,b)=>b==0?a:gcf(b,a%b) //use euclid's algorithm
+		matrix = matrix.map(a=>{const b=a.reduce(gcf);return a.map(c=>c/(b||1))})
+
 		//create and return the new matrix
 		return new Matrix(this.m, this.n, matrix.reduce((a,b)=>a.concat(b)))
 	}
+
+	get rref() { if (!("rref" in this._private)) this._private["rref"] = this.getRref(); return this._private["rref"] }
+	getRref() {
+		//divide each row by its pivot
+		const matrix = this.rr.getMatrix().map(a=>{
+			const val=a.find(b=>b!=0)||1
+			return a.map(b=>b/val)
+		})
+		return new Matrix(this.m, this.n, matrix.reduce((a,b)=>a.concat(b)))
+	}
+
 	get solution() { if (!("solution" in this._private)) this._private["solution"] = this.getSolution(); return this._private["solution"] }
 	getSolution() {
 		//solves matrix by rrefing it and converting that into x_p and x_h
