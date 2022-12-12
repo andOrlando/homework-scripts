@@ -1,3 +1,4 @@
+Z
 # homework-scripts
 I don't wanna do homework please
 
@@ -52,7 +53,8 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
    - `add(other)`: sum of matrix and the other matrix
    - `multiply(other)`: product of this matrix and the other matrix or scalar
    - `append(other)`: adds columns of other onto the right of this matrix
-   - `copy()`: TODO
+   - `copy()`: copies pasteable stuff into mymathlab
+   - `copylatex()`: same thing but for wolfram
    - `toString()`: turns to string
  - object properties--these are read-only or it might break stuff. If you want a mutable copy, use getter syntax like `getMatrix` or `getInverse` for anything other than entries.
    - `m`: rows

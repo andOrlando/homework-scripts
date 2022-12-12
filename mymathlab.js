@@ -69,6 +69,7 @@ class Matrix {
 		return this.multiply(this.pow(n-1))
 	}
 	append(other) {
+
 		if (this.m != other.m) throw "rows must be equal"
 		var entries = []
 		for (var i=0; i<this.m; i++) entries = entries.concat(this.getRow(i).concat(other.getRow(i)))
@@ -78,6 +79,13 @@ class Matrix {
 	copy() {
 		const matrix = this.getMatrix()
 		const string = `@MATX{${matrix.map(a=>`{${a.join(";")}}`).join(";")}}`
+		out(string) //print it out if I can't paste it
+		window.prompt("Copy the string", string)
+	}
+
+	copylatex() {
+		const matrix = this.getMatrix()
+		const string = `{${matrix.map(a=>`{${a.join(",")}}`).join(",")}}`
 		out(string) //print it out if I can't paste it
 		window.prompt("Copy the string", string)
 	}
@@ -116,7 +124,7 @@ class Matrix {
 				const tozero = matrix[rown][coln]
 
 				//get matrix[row][col] to zero by subtracting row we're operating on
-				matrix[rown] = matrix[rown].map((a,i)=>a-matrix[npivots][i]/val*tozero)
+				matrix[rown] = matrix[rown].map((a,i)=>Math.round((a-matrix[npivots][i]/val*tozero)/10)*10)
 			}
 
 			//divide row by its pivot
