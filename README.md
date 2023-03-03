@@ -32,6 +32,11 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
 javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/webassign.js").then(a=>a.text()).then(eval)
 ```
 
+**Kendall Hunt Content**
+```js
+javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/khp.js").then(a=>a.text()).then(eval)
+```
+
 **zyBooks**
  - solves everything but the challenge sections
  - if you let it keep going it can do literally all your homework
@@ -41,6 +46,8 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
  - only scrolls through to generate you some base points
  
 **MyMathLab**
+ - currently kinda broken according to my linear friends
+ - can't be bothered to fix it because I'm no longer taking linear
  - adds a console
  - console literally just evaluates javascript strings but also adds a matrix object
  - said object can calc a bunch of stuff about matrices
@@ -80,6 +87,9 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
 **webassign**
  - Adds buttons to all equations that let you copy the latex of the equation. This can *theoretically* be pasted into wolfram alpha but none of us would do that because we're academically honest
  - This was made as part of Hack UMass 2022 with Marshall, Elijah, Aditi and Cynthia but was folded into this since we're not really continuing that project
+
+**kendall hunt content**
+ - does something idk I'll fill this out later
 
 **TODO:**
  - [ ] make double/triple integrals wihtout expressions work correctly (webassign sees them as a single integral)
