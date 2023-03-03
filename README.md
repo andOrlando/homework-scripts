@@ -34,7 +34,7 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
 
 **Kendall Hunt Content**
 ```js
-javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/khp.js").then(a=>a.text()).then(eval)
+javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/khc.js").then(a=>a.text()).then(eval)
 ```
 
 **zyBooks**
