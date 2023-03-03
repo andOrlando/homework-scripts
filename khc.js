@@ -127,7 +127,7 @@ function select(html) {
 }
 
 //select with fancy formatting
-const select_fancy = () => select(Object.entries(data).map(([_, a])=>`${a.title}<br>${a.desc}<br>${a.ans}<br>`).join(""))
+select_fancy = () => select(Object.entries(data).map(([_, a])=>`${a.title}<br>${a.desc}<br>${a.ans}<br>`).join(""))
 
 //parse the question on the page
 function parse_question() {
