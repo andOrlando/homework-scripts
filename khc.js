@@ -1,55 +1,10 @@
 //ask for json string input for question data
-// data = JSON.parse(prompt("enter json data") || "{}")
-
 data = JSON.parse(localStorage.getItem("data") || {})
 
 //sha1 becuase my goddamn tiny hash thing somehow had collisions
 const sha1 = async m => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-1',new TextEncoder('utf-8').encode(m)))).map(b=>('00'+b.toString(16)).slice(-2)).join('');
 
 const isresult = !!window.location.href.match("result")
-
-//if it's a result page, parse it as such
-//https://umass.khpcontent.com/question-pool-result-page/6658249/909681/2689507/11143191
-if (isresult) {
-  //this is all in an async function
-  (async () => {
-
-    //parse results
-    const results = document.querySelectorAll(".assessment_question_result")
-  
-    for (const result of results) {
-      //if they're correct it's true, if they're incorrect it's false
-      let correct = result.classList.contains("assessment_question_result_correct")    
-
-      //get title and content
-      let parent = result.querySelector("p")
-      let title = parent.children[0].textContent
-      let desc = parent.nextElementSibling.textContent
-      let key = await sha1(title + desc)
-    
-    
-      //if the data already exists, do somethign idk
-      if (key in data) continue;
-
-      console.log(`for hash ${key} we get ${correct}`)
-    
-      //otherwise set the data
-      data[key] = {
-        "title": title,
-        "desc": desc,
-        "ans": correct
-      }
-    }
-
-    // prompt("result", JSON.stringify(data))
-    localStorage.setItem("data", JSON.stringify(data))
-  
-    //break so we don't act as normal
-
-  })()
-
-  
-}
 
 //add a little thing
 const input = '<svg class="bennett" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm16 64h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V144c0-8.8 7.2-16 16-16zM64 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V240zm16 80h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V336c0-8.8 7.2-16 16-16zm80-176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V144zm16 80h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V240c0-8.8 7.2-16 16-16zM160 336c0-8.8 7.2-16 16-16H400c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V336zM272 128h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V144c0-8.8 7.2-16 16-16zM256 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V240zM368 128h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V144c0-8.8 7.2-16 16-16zM352 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V240zM464 128h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H464c-8.8 0-16-7.2-16-16V144c0-8.8 7.2-16 16-16zM448 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H464c-8.8 0-16-7.2-16-16V240zm16 80h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H464c-8.8 0-16-7.2-16-16V336c0-8.8 7.2-16 16-16z"/></svg>'
@@ -110,16 +65,13 @@ svg.bennett {
 </style>
 <div id="bennettc">
   <div id="bennettleft">
-    <div class="bennettbutton" onclick="
-      localStorage.setItem('data', prompt('enter data') || '{}');
-      data=JSON.parse(localStorage.getItem('data'))
-    ">${input}</div>
-    ${isresult ? "" : `<div class="bennettbutton" onclick="parse_question()">${check}</div>`}
-    ${isresult ? "" : `<div class="bennettbutton" onclick="parse_all()">${doublecheck}</div>`}
+    <div class="bennettbutton" onclick="get_new_data()">${input}</div>
+    ${isresult ? "" : `<div class="bennettbutton" onclick="logclear();parse_question()">${check}</div>`}
+    ${isresult ? "" : `<div class="bennettbutton" onclick="logclear();parse_all()">${doublecheck}</div>`}
     <div class="bennettbutton" onclick="select(JSON.stringify(data))">${copynormal}</div>
     <div class="bennettbutton" onclick="select_fancy()">${copyfancy}</div>
   </div>
-  <div id="bennettcopy">things to be copied go here</div>
+  <div id="bennettcopy">cool script<br></div>
 </div>`)
 
 const copything = document.getElementById("bennettcopy")
@@ -134,6 +86,9 @@ const get_buttons = () => [...document.querySelectorAll(".question_link_wrapper 
 //cute little wait function
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
+const log = m => copything.innerHTML += `${m}<br>`
+const logclear = () => copything.innerHTML = ""
+
 //select the text with formatting
 function select(html) {
   copything.innerHTML = html
@@ -147,31 +102,70 @@ function select(html) {
 }
 
 //select with fancy formatting
-select_fancy = () => select(Object.entries(data).map(([_, a])=>`${a.title}<br>${a.desc}<br>${a.ans}<br>`).join(""))
+select_fancy = () => select(Object.entries(data)
+  .sort(([_,a])=>Number(a.title.match(/\d+(?:\.\d+)/)))
+  .reverse()
+  .map(([_, a])=>`${a.title}<br>${a.desc}<br>${a.ans}<br>`).join(""))
 
+//if it's a result page, parse it as such
+//https://umass.khpcontent.com/question-pool-result-page/6658249/909681/2689507/11143191
+if (isresult) {
+  //this is all in an async function
+  (async () => {
+
+    //parse results
+    const results = document.querySelectorAll(".assessment_question_result")
+  
+    for (const result of results) {
+      //if they're correct it's true, if they're incorrect it's false
+      let correct = result.classList.contains("assessment_question_result_correct")    
+
+      //get title and content
+      let parent = result.querySelector("p")
+      let title = parent.children[0].textContent
+      let desc = parent.nextElementSibling.textContent
+      let key = await sha1(title + desc)
+    
+    
+      //if the data already exists, do somethign idk
+      if (key in data) continue;
+
+      log(`${key} ${correct+0}`)
+    
+      //otherwise set the data
+      data[key] = {
+        "title": title,
+        "desc": desc,
+        "ans": correct
+      }
+    }
+
+    // prompt("result", JSON.stringify(data))
+    localStorage.setItem("data", JSON.stringify(data))
+  
+    //break so we don't act as normal
+
+  })()
+
+  
+}
 //parse the question on the page
 async function parse_question() {
+  
   //get question box
   let parent = document.querySelector(".questionpool_question_narrative>label")
   let title = parent.querySelector("strong").textContent
   let desc = parent.children[1].textContent
   let key = await sha1(title + desc)
-  console.log(key)
   
-  //if it doesn't already exit, instantiate data
-  // if (!data[key]) {
-  //   data[key] = {}
-  //   data[key].title = title
-  //   data[key].desc = desc
-  // }
+  log(key)
   
   let select = document.querySelector("select")
   
   
   //if we already have the correct answer, fill it out
   if (key in data) {
-    console.log(data[key])
-    console.log(`doing good answer ${data[key].ans} for ${data[key].ans+0}`)
+    log(`has good answer ${data[key].ans}`)
     select.value = data[key].ans+0+""
     select.style.color = "green"
     return
@@ -179,7 +173,6 @@ async function parse_question() {
   
   //otherwise fill it out bad
   //pick next answer not already in bad answers
-  // choice = [...select.options].map(a=>a.value).filter(a=>a!=="_none").filter(a=>data[key].badans.indexOf(a)===-1)[0]
   select.value = "1"
   select.style.color = "red"
  
@@ -193,14 +186,13 @@ async function parse_all() {
     
     buttons = get_buttons()
 
-    console.log("clicking question number " + (i+1))
     assessmentBubbleClicked(i+1, buttons[i])
     
     await wait(1000)
     
     while (get_question_number() != i+1) {
 
-      console.log("hasn't found " + (i+1))
+      log("looking for " + (i+1))
       assessmentBubbleClicked(i+1, buttons[i])
       await wait(500)
     }
@@ -210,12 +202,36 @@ async function parse_all() {
     await wait(500)
   }
   
-  console.log("finished")
+  log("finished")
   
   document.getElementById("i_am_finished").click()
   
   await wait(500)
   
   document.querySelector(".ui-dialog-buttonset button").click()
+  
+}
+
+function get_new_data() {
+  let res = prompt("json data, have a + at the beginning if you wanna add it")
+  if (!res) return
+  
+  const add = res.charAt(0) == "+"
+  
+  if (add) res = res.substring(1)
+  
+  const newdata = JSON.parse(res)
+  
+  //if it's not add, it's easy
+  if (!add) {
+    localStorage.setItem("olddata", JSON.stringify(data))
+    localStorage.setItem("data", JSON.stringify(newdata))
+    data = newdata
+    return
+  }
+  
+  //otherwise add all unique keys
+  for (const [key, value] of Object.entries(newdata))
+    if (!(key in data)) data[key] = value
   
 }
