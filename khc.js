@@ -53,6 +53,8 @@ svg.bennett {
   width:100%;
   height:100%;
   overflow-y:scroll;
+  display:flex;
+  flex-direction:column-reverse;
 }
 #bennettleft {
   width:75px;
@@ -158,19 +160,20 @@ async function parse_question() {
   let desc = parent.children[1].textContent
   let key = await sha1(title + desc)
   
-  log(key)
   
   let select = document.querySelector("select")
   
   
   //if we already have the correct answer, fill it out
   if (key in data) {
-    log(`has good answer ${data[key].ans}`)
+    log(`${key} ${data[key].ans}✓`)
     select.value = data[key].ans+0+""
     select.style.color = "green"
     return
   }
   
+  log(key)
+
   //otherwise fill it out bad
   //pick next answer not already in bad answers
   select.value = "1"
