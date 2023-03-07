@@ -29,7 +29,7 @@ document.body.insertAdjacentHTML("beforeend", `
 }
 #bennettleft {
   width:75px;
-  background:blue;
+  background:#c1a3db;
   display:flex;
   flex-direction:column;
   justify-content:space-around;
@@ -44,10 +44,10 @@ svg.bennett {
   transition: 0.2s background;
   display:flex;
   justify-content:center;
-  background:#8761a8;
+  background:#c1a3db;
 }
 .bennettbutton:hover {
-  background:#705488;
+  background:#cab2de;
 }
 #bennettcopy {
   width:100%;
