@@ -166,7 +166,7 @@ async function parse_question() {
   
   //if we already have the correct answer, fill it out
   if (key in data) {
-    log(`${key} ${data[key].ans}✓`)
+    log(`${key} ${data[key].ans+0}✓`)
     select.value = data[key].ans+0+""
     select.style.color = "green"
     return
