@@ -1,42 +1,58 @@
 //ask for json string input for question data
-data = JSON.parse(prompt("enter json data") || "{}")
+// data = JSON.parse(prompt("enter json data") || "{}")
 
-//cute little hash function because I can
-//large prime because you just gotta deal with it
-//probably doens't make my hash significantly better and I literally couldn't care less
-const BIG_NUMBER = 707739543555117386148483657577
-const hash = s => [...Array(s.length)].map((_,i)=>s.charCodeAt(i)).reduce((s,c,i)=>s+c<<i) * BIG_NUMBER % 0xffffffff
+data = JSON.parse(localStorage.getItem("data") || {})
+
+//sha1 becuase my goddamn tiny hash thing somehow had collisions
+const sha1 = async m => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-1',new TextEncoder('utf-8').encode(m)))).map(b=>('00'+b.toString(16)).slice(-2)).join('');
+
+const isresult = !!window.location.href.match("result")
 
 //if it's a result page, parse it as such
 //https://umass.khpcontent.com/question-pool-result-page/6658249/909681/2689507/11143191
-if (window.location.href.match("result")) {
-  //parse results
-  const results = document.querySelectorAll(".assessment_question_result")
-  
-  for (const result of results) {
-    //if they're correct it's true, if they're incorrect it's false
-    let correct = result.classList.contains("assessment_question_result_correct")    
+if (isresult) {
+  //this is all in an async function
+  (async () => {
 
-    //get title and content
-    let parent = result.querySelector("p")
-    let title = parent.children[0].textContent
-    let desc = parent.nextElementSibling.textContent
-    let key = hash(title + desc)
+    //parse results
+    const results = document.querySelectorAll(".assessment_question_result")
+  
+    for (const result of results) {
+      //if they're correct it's true, if they're incorrect it's false
+      let correct = result.classList.contains("assessment_question_result_correct")    
+
+      //get title and content
+      let parent = result.querySelector("p")
+      let title = parent.children[0].textContent
+      let desc = parent.nextElementSibling.textContent
+      let key = await sha1(title + desc)
     
-    //get data at hash
-    //we also should already have the appropriate stuff in data
-    console.log(`for hash ${key} we get ${correct}`)
-    data[key].ans = correct
-  }
+    
+      //if the data already exists, do somethign idk
+      if (key in data) continue;
+
+      console.log(`for hash ${key} we get ${correct}`)
+    
+      //otherwise set the data
+      data[key] = {
+        "title": title,
+        "desc": desc,
+        "ans": correct
+      }
+    }
+
+    // prompt("result", JSON.stringify(data))
+    localStorage.setItem("data", JSON.stringify(data))
   
-  //spit back data
-  prompt("result", JSON.stringify(data))
+    //break so we don't act as normal
+
+  })()
+
   
-  //break so we don't act as normal
-  throw "stopping"
 }
 
 //add a little thing
+const input = '<svg class="bennett" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm16 64h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V144c0-8.8 7.2-16 16-16zM64 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V240zm16 80h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V336c0-8.8 7.2-16 16-16zm80-176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V144zm16 80h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V240c0-8.8 7.2-16 16-16zM160 336c0-8.8 7.2-16 16-16H400c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V336zM272 128h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V144c0-8.8 7.2-16 16-16zM256 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V240zM368 128h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V144c0-8.8 7.2-16 16-16zM352 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V240zM464 128h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H464c-8.8 0-16-7.2-16-16V144c0-8.8 7.2-16 16-16zM448 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H464c-8.8 0-16-7.2-16-16V240zm16 80h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H464c-8.8 0-16-7.2-16-16V336c0-8.8 7.2-16 16-16z"/></svg>'
 const check = '<svg class="bennett" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>'
 const doublecheck = '<svg class="bennett" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M374.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 402.7 86.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z"/></svg>'
 const copynormal = '<svg class="bennett" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M224 0c-35.3 0-64 28.7-64 64V288c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H224zM64 160c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H288c35.3 0 64-28.7 64-64V384H288v64H64V224h64V160H64z"/></svg>'
@@ -94,8 +110,12 @@ svg.bennett {
 </style>
 <div id="bennettc">
   <div id="bennettleft">
-    <div class="bennettbutton" onclick="parse_question()">${check}</div>
-    <div class="bennettbutton" onclick="parse_all()">${doublecheck}</div>
+    <div class="bennettbutton" onclick="
+      localStorage.setItem('data', prompt('enter data') || '{}');
+      data=JSON.parse(localStorage.getItem('data'))
+    ">${input}</div>
+    ${isresult ? "" : `<div class="bennettbutton" onclick="parse_question()">${check}</div>`}
+    ${isresult ? "" : `<div class="bennettbutton" onclick="parse_all()">${doublecheck}</div>`}
     <div class="bennettbutton" onclick="select(JSON.stringify(data))">${copynormal}</div>
     <div class="bennettbutton" onclick="select_fancy()">${copyfancy}</div>
   </div>
@@ -130,27 +150,31 @@ function select(html) {
 select_fancy = () => select(Object.entries(data).map(([_, a])=>`${a.title}<br>${a.desc}<br>${a.ans}<br>`).join(""))
 
 //parse the question on the page
-function parse_question() {
+async function parse_question() {
   //get question box
   let parent = document.querySelector(".questionpool_question_narrative>label")
   let title = parent.querySelector("strong").textContent
   let desc = parent.children[1].textContent
-  let key = hash(title + desc)
+  let key = await sha1(title + desc)
+  console.log(key)
   
   //if it doesn't already exit, instantiate data
-  if (!data[key]) {
-    data[key] = {}
-    data[key].title = title
-    data[key].desc = desc
-  }
+  // if (!data[key]) {
+  //   data[key] = {}
+  //   data[key].title = title
+  //   data[key].desc = desc
+  // }
   
   let select = document.querySelector("select")
   
+  
   //if we already have the correct answer, fill it out
-  if (data.ans) {
-    console.log(`doing good answer ${data.goodans}`)
-    select.value = data.ans
+  if (key in data) {
+    console.log(data[key])
+    console.log(`doing good answer ${data.goodans} for ${data.ans+0}`)
+    select.value = data.ans+0+""
     select.style.color = "green"
+    return
   }
   
   //otherwise fill it out bad
@@ -170,7 +194,6 @@ async function parse_all() {
     buttons = get_buttons()
 
     console.log("clicking question number " + (i+1))
-    console.log(buttons[i])
     assessmentBubbleClicked(i+1, buttons[i])
     
     await wait(2000)
