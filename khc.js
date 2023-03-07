@@ -87,7 +87,7 @@ const get_buttons = () => [...document.querySelectorAll(".question_link_wrapper 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const log = m => copything.innerHTML += `${m}<br>`
-const logclear = () => copything.innerHTML = ""
+logclear = () => copything.innerHTML = ""
 
 //select the text with formatting
 function select(html) {
