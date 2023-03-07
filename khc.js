@@ -171,8 +171,8 @@ async function parse_question() {
   //if we already have the correct answer, fill it out
   if (key in data) {
     console.log(data[key])
-    console.log(`doing good answer ${data.goodans} for ${data.ans+0}`)
-    select.value = data.ans+0+""
+    console.log(`doing good answer ${data[key].ans} for ${data[key].ans+0}`)
+    select.value = data[key].ans+0+""
     select.style.color = "green"
     return
   }
@@ -196,19 +196,26 @@ async function parse_all() {
     console.log("clicking question number " + (i+1))
     assessmentBubbleClicked(i+1, buttons[i])
     
-    await wait(2000)
+    await wait(1000)
     
     while (get_question_number() != i+1) {
 
       console.log("hasn't found " + (i+1))
       assessmentBubbleClicked(i+1, buttons[i])
-      await wait(1000)
+      await wait(500)
     }
     
     parse_question()
     
-    await wait(1000)
+    await wait(500)
   }
   
-    console.log("finished")
+  console.log("finished")
+  
+  document.getElementById("i_am_finished").click()
+  
+  await wait(500)
+  
+  document.querySelector(".ui-dialog-buttonset button").click()
+  
 }
