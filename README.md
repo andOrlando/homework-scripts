@@ -89,7 +89,12 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
  - This was made as part of Hack UMass 2022 with Marshall, Elijah, Aditi and Cynthia but was folded into this since we're not really continuing that project
 
 **kendall hunt content**
- - does something idk I'll fill this out later
+ - When used on a results page, commits all questions and answers to a local database.
+ - When used on a quiz page, the check button solves the current question if it has an answer in the database and the double check solves all questions it knows the answer to
+ - copy button selects raw json data (so you can copy and paste it into some external place or share it or something)
+ - print button selects a prettier version of json data, ordered by question number
+ - keyboard button allows you to input json data or, if prepended with a +, add on to your current database.
+   - if you overwrite your data accidentally, you can recover your old data with localStorage.getItem("olddata")
 
 **TODO:**
  - [ ] make double/triple integrals wihtout expressions work correctly (webassign sees them as a single integral)

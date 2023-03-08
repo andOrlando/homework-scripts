@@ -27,6 +27,7 @@ document.body.insertAdjacentHTML("beforeend", `
   font-size:12px;
   font-family:monospace;
   display:flex;
+  box-shadow:0px 10px 20px black;
 }
 #bennettleft {
   width:75px;
