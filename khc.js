@@ -4,6 +4,7 @@ data = JSON.parse(localStorage.getItem("data") || {})
 //sha1 becuase my goddamn tiny hash thing somehow had collisions
 const sha1 = async m => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-1',new TextEncoder('utf-8').encode(m)))).map(b=>('00'+b.toString(16)).slice(-2)).join('');
 
+//whether we're at a result window or not
 const isresult = !!window.location.href.match("result")
 
 //add a little thing
@@ -18,7 +19,7 @@ document.body.insertAdjacentHTML("beforeend", `
 #bennettc {
   z-index:1;
   position:fixed;
-  width:400px;
+  width:440px;
   height:200px;
   background:#d1bbe5;
   bottom:0;
@@ -73,10 +74,10 @@ svg.bennett {
     <div class="bennettbutton" onclick="select(JSON.stringify(data))">${copynormal}</div>
     <div class="bennettbutton" onclick="select_fancy()">${copyfancy}</div>
   </div>
-  <div id="bennettcopy">cool script<br></div>
+  <div id="bennettlog">cool script<br></div>
 </div>`)
 
-const copything = document.getElementById("bennettcopy")
+const textwindow = document.getElementById("bennettlog")
 
 //otherwise we're free to continue as normal
 //get current question number as int
@@ -88,14 +89,17 @@ const get_buttons = () => [...document.querySelectorAll(".question_link_wrapper 
 //cute little wait function
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-const log = m => copything.innerHTML += `${m}<br>`
-logclear = () => copything.innerHTML = ""
+//log to text window
+const log = m => textwindow.innerHTML += `${m}<br>`
+
+//clear text window
+logclear = () => textwindow.innerHTML = ""
 
 //select the text with formatting
 function select(html) {
-  copything.innerHTML = html
+  textwindow.innerHTML = html
   var range = document.createRange()
-  var nodes = copything.childNodes
+  var nodes = textwindow.childNodes
   range.setStart(nodes[0], 0)
   range.setEnd(nodes[nodes.length-1], nodes[nodes.length-1].length)
   var sel = getSelection()
@@ -110,17 +114,13 @@ select_fancy = () => select(Object.entries(data)
   .map(([_, a])=>`${a.title}<br>${a.desc}<br>${a.ans}<br>`).join(""))
 
 //if it's a result page, parse it as such
-//https://umass.khpcontent.com/question-pool-result-page/6658249/909681/2689507/11143191
 if (isresult) {
-  //this is all in an async function
+
+  //this is all in an async function so I can have sha1
   (async () => {
 
-    //parse results
     const results = document.querySelectorAll(".assessment_question_result")
-  
     for (const result of results) {
-      //if they're correct it's true, if they're incorrect it's false
-      let correct = result.classList.contains("assessment_question_result_correct")    
 
       //get title and content
       let parent = result.querySelector("p")
@@ -128,28 +128,26 @@ if (isresult) {
       let desc = parent.nextElementSibling.textContent
       let key = await sha1(title + desc)
     
-    
-      //if the data already exists, do somethign idk
+      //if the data already exists we don't care
       if (key in data) continue;
 
-      log(`${key} ${correct+0}`)
+      //otherwise we get the answer
+      let answer = result.querySelector("li.answer_correct").textContent.match(/.*?(?= \(correct\))/)[0].trim().toLowerCase()
+
+      log(`${key} ${answer}`)
     
       //otherwise set the data
       data[key] = {
         "title": title,
         "desc": desc,
-        "ans": correct
+        "ans": answer
       }
     }
 
     // prompt("result", JSON.stringify(data))
     localStorage.setItem("data", JSON.stringify(data))
   
-    //break so we don't act as normal
-
   })()
-
-  
 }
 //parse the question on the page
 async function parse_question() {
@@ -160,25 +158,20 @@ async function parse_question() {
   let desc = parent.children[1].textContent
   let key = await sha1(title + desc)
   
-  
   let select = document.querySelector("select")
   
+  //if we don't have the data, refuse to fill it out
+  if (!(key in data)) { log("question not in database"); return }
   
   //if we already have the correct answer, fill it out
-  if (key in data) {
-    log(`${key} ${data[key].ans+0}✓`)
-    select.value = data[key].ans+0+""
-    select.style.color = "green"
-    return
-  }
-  
-  log(key)
+  log(`${key} ${data[key].ans}`)
 
-  //otherwise fill it out bad
-  //pick next answer not already in bad answers
-  select.value = "1"
-  select.style.color = "red"
- 
+  const options = [...select.children].filter(a=>a.textContent.trim().toLowerCase() == "true")
+
+  if (!options[0]) { log(`couldn't find ${data[key].ans}`); return }
+  
+  select.value = options[0].value
+  select.style.color = "green"
 }
 
 async function parse_all() {
@@ -206,12 +199,6 @@ async function parse_all() {
   }
   
   log("finished")
-  
-  document.getElementById("i_am_finished").click()
-  
-  await wait(500)
-  
-  document.querySelector(".ui-dialog-buttonset button").click()
   
 }
 
