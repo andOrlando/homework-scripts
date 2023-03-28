@@ -167,7 +167,7 @@ async function parse_question() {
   //if we already have the correct answer, fill it out
   log(`${key} ${data[key].ans}`)
 
-  const options = [...select.children].filter(a=>a.textContent.trim().toLowerCase() == "true")
+  const options = [...select.children].filter(a=>a.textContent.trim().toLowerCase() == data[key].ans)
 
   if (!options[0]) { log(`couldn't find ${data[key].ans}`); return }
   
