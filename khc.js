@@ -1,5 +1,5 @@
 //ask for json string input for question data
-data = JSON.parse(localStorage.getItem("data") || {})
+data = JSON.parse(localStorage.getItem("data") || "{}")
 
 //sha1 becuase my goddamn tiny hash thing somehow had collisions
 const sha1 = async m => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-1',new TextEncoder('utf-8').encode(m)))).map(b=>('00'+b.toString(16)).slice(-2)).join('');
