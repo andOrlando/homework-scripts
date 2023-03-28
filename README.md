@@ -7,40 +7,17 @@ That being said, **do not use this** unless you really really trust me. I can't 
 
 Also this is all totally theoretical, just as one would make a really shady crypto miner and open source it just for testing purposes. I definitely haven't used this myself because I'm too academically dignified. You also should not use this yourself because you're also academically dignified.
 
-**MyMathLab Bookmark**
+**Add this bookmark for any of the pages**
 ```js
-javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/mymathlab.js").then(a=>a.text()).then(eval)
-```
-
-**zyBooks Bookmark**
-```js
-javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/zybooks.js").then(a=>a.text()).then(eval)
-```
-
-**zyBooks Bookmark but it finishes everything**
-```js
-javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/zybooks.js").then(a=>a.text()).then(a=>eval(`finisheverything="yes";${a}`))
-```
-
-**Perusall Bookmark**
-```js
-javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/perusall.js").then(a=>a.text()).then(eval)
-```
-
-**Webassign Bookmark**
-```js
-javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/webassign.js").then(a=>a.text()).then(eval)
-```
-
-**Kendall Hunt Content**
-```js
-javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/khc.js").then(a=>a.text()).then(eval)
+javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/main.js").then(a=>a.text()).then(eval)
 ```
 
 **zyBooks**
  - solves everything but the challenge sections
  - if you let it keep going it can do literally all your homework
  - you don't even have to press buttons, just let it do its thing and when you come back you'll have a finished zybooks
+ - if you wanna let it solve everything you have to type `finisheverything="yes"` in the console before you run the script
+ - otherwise it'll just solve the page
  
 **Perusall**
  - only scrolls through to generate you some base points
@@ -99,4 +76,5 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
 **TODO:**
  - [ ] make double/triple integrals wihtout expressions work correctly (webassign sees them as a single integral)
  - [ ] make sin/cos work correctly by parsing parenthesis but that'd be a lot of work so idk
- - [ ] make alternate perusall script that clicks on and off the assignment to generate more points
+ - [x] make alternate perusall script that clicks on and off the assignment to generate more points
+ - [ ] make zybooks script better so its easier to finish everything in one go
