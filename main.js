@@ -1,19 +1,16 @@
 let url = window.location.href
 
-if (url.match(/openvellum.ecollege.com/) || url.match(/mylab.pearson.com/))
-  fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/mymathlab.js").then(a=>a.text()).then(eval)
+let script
 
-else if (url.match(/webassign.net/))
-  fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/webassign.js").then(a=>a.text()).then(eval)
+if (url.match(/openvellum.ecollege.com/) || url.match(/mylab.pearson.com/)) script = "mymathlab"
+else if (url.match(/webassign.net/)) script = "webassign"
+else if (url.match(/learn.zybooks.com/)) script = "zybooks"
+else if (url.match(/app.perusall.com/)) script = "perusall"
+else if (url.match(/khpcontent.com/)) script = "khc"
+else if (url.match(/classquestion.com/)) script = "classquestion"
 
-else if (url.match(/learn.zybooks.com/))
-  fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/zybooks.js").then(a=>a.text()).then(eval)
-
-else if (url.match(/app.perusall.com/))
-  fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/perusall.js").then(a=>a.text()).then(eval)
-
-else if (url.match(/khpcontent.com/))
-  fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/khc.js").then(a=>a.text()).then(eval)
-
-else if (url.match(/classquestion.com/))
-  fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/classquestion.js").then(a=>a.text()).then(eval)
+if (script == undefined) console.log(`no script found for ${url}`)
+else {
+  console.log(`running ${script} script`)
+  fetch(`https://raw.githubusercontent.com/andOrlando/homework-scripts/main/${script}.js`).then(a=>a.text()).then(eval)
+}
