@@ -73,6 +73,11 @@ javascript:fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/
  - keyboard button allows you to input json data or, if prepended with a +, add on to your current database.
    - if you overwrite your data accidentally, you can recover your old data with localStorage.getItem("olddata")
 
+**classquestion**
+ - Automatically picks A so you can get that free ~77.5% without actually going to class or constantly glancing over at your computer
+ - That's literally it
+ - It's like 6 lines
+
 **TODO:**
  - [ ] make double/triple integrals wihtout expressions work correctly (webassign sees them as a single integral)
  - [ ] make sin/cos work correctly by parsing parenthesis but that'd be a lot of work so idk

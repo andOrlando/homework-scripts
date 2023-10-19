@@ -14,3 +14,6 @@ else if (url.match(/app.perusall.com/))
 
 else if (url.match(/khpcontent.com/))
   fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/khc.js").then(a=>a.text()).then(eval)
+
+else if (url.match(/classquestion.com/))
+  fetch("https://raw.githubusercontent.com/andOrlando/homework-scripts/main/classquestion.js").then(a=>a.text()).then(eval)
