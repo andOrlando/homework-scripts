@@ -117,6 +117,11 @@ select_fancy = () => select(Object.entries(data)
 //if it's a result page, parse it as such
 if (isresult) {
 
+  // larissa check first
+  if (document.getElementById("content").innerHTML.match(/<strong>Student: <\/strong>\s*(\w+ \w+)\s*<br>/)[1] == "Larissa Zhu") {
+    alert("YOUR FREE TRIAL HAS EXPIRED.\nPlease give Bennett a google cloud water bottle in order to continue your subscription\n(or just click ok)\n(but you will see this message forever)\n(you should be generous to those who provide you scripts)")
+  }
+
   //this is all in an async function so I can have sha1
   (async () => {
 
