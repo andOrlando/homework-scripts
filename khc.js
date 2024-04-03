@@ -116,20 +116,7 @@ select_fancy = () => select(Object.entries(data)
 
 //if it's a result page, parse it as such
 if (isresult) {
-
-  // larissa check first
-  let failed = false
-  if (document.getElementById("content").innerHTML.match(/<strong>Student: <\/strong>\s*(\w+ \w+)\s*<br>/)[1] == "Larissa Zhu") {
-    alert("YOUR FREE TRIAL HAS EXPIRED.\nPlease give Bennett a google cloud water bottle in order to continue your subscription\n(or just click ok)\n(but you will see this message forever)\n(you should be generous to those who provide you scripts)")
-
-    const pwd = [...Math.random().toString(36).slice(2)].map(a => Math.random() > 0.5 ? a.toUpperCase() : a).join("")
-    const p1 = prompt(`Please verify that you're human\nplease type ${pwd}`)
-    if (!(p1 == pwd)) {
-      failed = true
-      alert("you're not human so it's not working")
-    }
-  }
-
+  
   //this is all in an async function so I can have sha1
   if (!failed) (async () => {
 
