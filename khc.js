@@ -118,7 +118,7 @@ select_fancy = () => select(Object.entries(data)
 if (isresult) {
   
   //this is all in an async function so I can have sha1
-  if (!failed) (async () => {
+  (async () => {
 
     const results = document.querySelectorAll(".assessment_question_result")
     for (const result of results) {
