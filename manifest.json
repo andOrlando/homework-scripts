@@ -1,0 +1,13 @@
+{
+    "name": "Homework Scripts",
+    "description": "does that there fancy book learning for you",
+    "version": "0.0001",
+    "manifest_version": 3,
+    "permissions": ["scripting", "activeTab", "tabs"],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_title": "Homework"
+    }
+}
